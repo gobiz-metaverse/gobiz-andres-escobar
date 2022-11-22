@@ -3,6 +3,8 @@ import {Route, Switch} from 'react-router';
 import asyncComponent from "./utils/AsyncComponent";
 import {HashRouter} from "react-router-dom";
 import BetRoute from './pages/BetRoute'
+import {TopPlaying} from "./pages/bet/TopPlaying";
+import BetHistory from "./pages/bet/BetHistory";
 
 const AsyncDashboard = asyncComponent(() => import("./pages/Dashboard"));
 const AsyncMatch = asyncComponent(() => import("./pages/bet/Match"));
@@ -18,6 +20,8 @@ export default (
             <Route path="/todos" component={AsyncTodos}/>
             <BetRoute exact path="/" component={AsyncDashboard}/>
             <BetRoute exact path="/matches/:id" component={AsyncMatch}/>
+            <BetRoute exact path="/report/top-playing" component={TopPlaying}/>
+            <BetRoute exact path="/report/bet-history" component={BetHistory}/>
             <Route path="*" component={Async404}/>
         </Switch>
     </HashRouter>

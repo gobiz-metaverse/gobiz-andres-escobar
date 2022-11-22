@@ -48,8 +48,23 @@ class StandardLayout extends Component {
                               selectedKeys={this.props.activeMenu}
                               defaultSelectedKeys={['1']}
                               mode="inline"
-                              defaultOpenKeys={['sub_taiga']}
+                              openKeys={'report'}
                         >
+                            <Menu.Item key={"home"}>
+                                <Link to={'/'}>Trang chủ</Link>
+                            </Menu.Item>
+                            <SubMenu
+                                icon={<ProfileOutlined />}
+                                title={'Thống kê'}
+                                key={'report'}
+                            >
+                                <Menu.Item>
+                                    <Link to={'/report/bet-history'}>Lịch sử chơi toàn hệ thống</Link>
+                                </Menu.Item>
+                                <Menu.Item>
+                                    <Link to={'/report/top-playing'}>Top người chơi tích cực</Link>
+                                </Menu.Item>
+                            </SubMenu>
                             {/*<SubMenu*/}
                             {/*    icon={<SketchOutlined/>}*/}
                             {/*    key="sub_taiga"*/}
