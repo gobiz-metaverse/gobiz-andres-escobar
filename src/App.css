@@ -1,0 +1,134 @@
+@import '~antd/dist/antd.css';
+
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import "../node_modules/@syncfusion/ej2-layouts/styles/material.css";
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-kanban/styles/material.css";
+
+.box {
+  border: 1px solid #ebedf0;
+  border-radius: 2px;
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  margin: 0 0 16px;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.dashboard .ant-btn {
+  margin-bottom: 8px;
+}
+
+.emphasis {
+  font-weight: bold;
+}
+
+.logo {
+  height: 40px;
+  color: #fff;
+  font-size: 24px;
+  padding-left: 5px;
+}
+
+#components-layout-demo-side .logo {
+  height: 32px;
+  background: rgba(255,255,255,.2);
+  margin: 16px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hueng .ant-row {
+  margin-bottom: 5px;
+}
+
+.chanting {
+  font-size: 20px;
+}
+
+.requirements .scenario li {
+  list-style: none;
+}
+
+.requirements .scenario .keyword {
+  font-weight: bold;
+  display: inline-block;
+  width: 50px;
+}
+
+.requirements .datatable {
+  margin: 10px 30px;
+}
+
+.requirements .datatable th,.requirements .datatable td {
+  border: solid 1px black;
+  padding: 5px 10px;
+}
+
+.requirements .examples table {
+  width: auto;
+}
+
+.requirements .examples .ant-table-wrapper {
+  width: auto;
+}
+
+.requirements .quote {
+  color: #2f54eb;
+  font-weight: bold;
+}
+
+.requirements .param {
+  color: #52c41a;
+  font-weight: bold;
+}
+
+.requirements .examples .title {
+  font-weight: bold;
+}
+
+.requirements .user_story {
+  margin: 10px 0;
+}
+
+.requirements .user_story .ac {
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  padding: 10px;
+}
+
+.requirements .user_story .description {
+  padding: 10px;
+}
