@@ -1,0 +1,43 @@
+name: deploy_prod
+on:
+  workflow_dispatch:
+env:
+  PAGE_PROJECT_NAME: gobiz-wc
+jobs:
+  setup-build-publish:
+    name: Setup, Build, Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "npm_cache_dir=$(npm config get cache)" >> $GITHUB_ENV
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ env.npm_cache_dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+      - name: Build
+        env:
+          REACT_APP_API_BASE_URL: https://fifa.gobizdev.com/api
+          REACT_APP_LOGIN_URL: https://fifa.gobizdev.com/api/auth/gobiz
+          NODE_ENV: production
+        run: |
+          npm run build
+      - name: Deploy Cloudflare Pages
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CF_TOKEN }}
+          accountId: ${{ secrets.CF_AI }}
+          command: pages publish build --project-name=$PAGE_PROJECT_NAME --branch=main
