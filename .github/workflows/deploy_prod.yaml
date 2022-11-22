@@ -33,6 +33,7 @@ jobs:
           REACT_APP_API_BASE_URL: https://fifa.gobizdev.com/api
           REACT_APP_LOGIN_URL: https://fifa.gobizdev.com/api/auth/gobiz
           NODE_ENV: production
+          CI: false
         run: |
           npm run build
       - name: Deploy Cloudflare Pages
