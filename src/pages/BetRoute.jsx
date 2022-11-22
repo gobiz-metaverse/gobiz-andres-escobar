@@ -28,8 +28,8 @@ export default class BetRoute extends React.Component{
 
         const params = parseQueryStringToObject(queryString);
 
-        if (params && params['access_token']) {
-            LocalStore.getInstance().save('bet_session', decodeURI(params['access_token']))
+        if (params && params['access-token']) {
+            LocalStore.getInstance().save('bet_session', decodeURI(params['access-token']))
         }
         else {
             let bet_session = LocalStore.getInstance().read('bet_session');
