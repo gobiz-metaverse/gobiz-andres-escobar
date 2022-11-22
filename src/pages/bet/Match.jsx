@@ -82,10 +82,10 @@ export default class Match extends React.Component {
             return odd.code === '1'
         });
         let awayOdds = this.state.odds.find((odd) => {
-            return odd.code === 'x'
+            return odd.code === '2'
         });
         let drawOdds = this.state.odds.find((odd) => {
-            return odd.code === '2'
+            return odd.code === 'x'
         });
 
         // console.info(homeOdds, this.state.homeBet);
