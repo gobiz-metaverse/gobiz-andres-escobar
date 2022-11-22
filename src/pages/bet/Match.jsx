@@ -53,7 +53,7 @@ export default class Match extends React.Component {
 
     confirmBet =() => {
         if (this.state.homeBet > 100 || (this.state.drawBet > 0) || (this.state.awayBet > 0)) {
-            message.error(`Số tiền bet tối đa của vòng hiện tại là 100k, vui lòng nhập con số thấp hơn 100k`);
+            message.error(`Số xu bet tối đa của vòng hiện tại là 100k, vui lòng nhập con số thấp hơn 100k`);
             return
         }
 
@@ -99,10 +99,10 @@ export default class Match extends React.Component {
             <Link to={'/'}>Trở về trang chủ</Link>
             <h1>{this.state.match.homeTeam.name} vs {this.state.match.awayTeam.name}</h1>
 
-            Hướng dẫn chơi: bạn hãy điền số tiền bạn muốn đặt (đơn vị tính nghìn VNĐ, tức là nếu bạn nhập 100 tương
+            Hướng dẫn chơi: bạn hãy điền số xu bạn muốn đặt (đơn vị tính nghìn VNĐ, tức là nếu bạn nhập 100 tương
             đương bạn muốn đặt 100k VNĐ).
             Sau đó click vào nút "Xác nhận kèo" để xác nhận tham gia.<br/>
-            Bạn có thể đặt nhiều lần, với các tỉ lệ khác nhau miễn sao tổng số tiền bạn tham gia một kèo nhỏ hơn giới
+            Bạn có thể đặt nhiều lần, với các tỉ lệ khác nhau miễn sao tổng số xu bạn tham gia một kèo nhỏ hơn giới
             hạn nên vui lòng chú ý lịch sử các lần đặt của mình.
             <table className={'table'} style={{maxWidth: '800px'}}>
                 <tr>
@@ -118,7 +118,7 @@ export default class Match extends React.Component {
                     <td className={'text-right'}>{awayOdds ? awayOdds.ratio : null}</td>
                 </tr>
                 <tr>
-                    <th>Số tiền bạn muốn đặt<br/>(Đơn vị tính: nghìn VNĐ)</th>
+                    <th>Số xu bạn muốn đặt<br/>(Đơn vị tính: nghìn VNĐ)</th>
                     <td><Input className={'text-right'} value={this.state.homeBet} onChange={(e) => {
                         this.setState({homeBet: e.target.value, drawBet: 0, awayBet: 0})
                     }}/></td>
@@ -130,13 +130,13 @@ export default class Match extends React.Component {
                     }}/></td>
                 </tr>
                 <tr>
-                    <th>Số tiền thắng</th>
+                    <th>Số xu thắng</th>
                     <td className={'text-right'}>{homeOdds ? strip(homeOdds.ratio * this.state.homeBet * 1000) : null}</td>
                     <td className={'text-right'}>{drawOdds ? strip(drawOdds.ratio * this.state.drawBet * 1000) : null}</td>
                     <td className={'text-right'}>{awayOdds ? strip(awayOdds.ratio * this.state.awayBet * 1000) : null}</td>
                 </tr>
                 <tr>
-                    <th>Số tiền lãi khi thắng</th>
+                    <th>Số xu lãi khi thắng</th>
                     <td className={'text-right'}>{homeOdds ? strip((homeOdds.ratio - 1) * this.state.homeBet * 1000) : null}</td>
                     <td className={'text-right'}>{drawOdds ? strip((drawOdds.ratio - 1) * this.state.drawBet * 1000) : null}</td>
                     <td className={'text-right'}>{awayOdds ? strip((awayOdds.ratio - 1) * this.state.awayBet * 1000) : null}</td>
