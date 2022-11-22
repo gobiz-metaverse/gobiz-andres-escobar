@@ -52,6 +52,11 @@ export default class Match extends React.Component {
     }
 
     confirmBet =() => {
+        if (this.state.homeBet > 100 || (this.state.drawBet > 0) || (this.state.awayBet > 0)) {
+            message.error(`Số tiền bet tối đa của vòng hiện tại là 100k, vui lòng nhập con số thấp hơn 100k`);
+            return
+        }
+
         let handleResponse = (response) => {
             if (response.status === 201)
                 message.success('Đã bet thành công');
