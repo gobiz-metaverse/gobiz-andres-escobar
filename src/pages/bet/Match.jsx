@@ -52,7 +52,7 @@ export default class Match extends React.Component {
     }
 
     confirmBet =() => {
-        if (this.state.homeBet > 100 || (this.state.drawBet > 0) || (this.state.awayBet > 0)) {
+        if (this.state.homeBet > 100 || (this.state.drawBet > 100) || (this.state.awayBet > 100)) {
             message.error(`Số xu bet tối đa của vòng hiện tại là 100k, vui lòng nhập con số thấp hơn 100k`);
             return
         }
