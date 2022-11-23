@@ -48,7 +48,7 @@ class StandardLayout extends Component {
                               selectedKeys={this.props.activeMenu}
                               defaultSelectedKeys={['1']}
                               mode="inline"
-                              openKeys={'report'}
+                              defaultOpenKeys={['report']}
                         >
                             <Menu.Item key={"home"}>
                                 <Link to={'/'}>Trang chủ</Link>
