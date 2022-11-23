@@ -13,6 +13,7 @@ const AsyncMatch = asyncComponent(() => import("./pages/bet/Match"));
 // import async - code splitting
 const Async404 = asyncComponent(() => import("./pages/404"));
 const AsyncTodos = asyncComponent(() => import("./pages/todos/index.jsx"));
+const AsyncBetRule = asyncComponent(() => import('./pages/rule'))
 export default (
     <HashRouter>
         <Switch>
@@ -22,6 +23,7 @@ export default (
             <BetRoute exact path="/matches/:id" component={AsyncMatch}/>
             <BetRoute exact path="/report/top-playing" component={TopPlaying}/>
             <BetRoute exact path="/report/bet-history" component={BetHistory}/>
+            <BetRoute exact path="/rule" component={AsyncBetRule}/>
             <Route path="*" component={Async404}/>
         </Switch>
     </HashRouter>
