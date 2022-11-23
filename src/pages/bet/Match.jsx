@@ -119,7 +119,7 @@ export default class Match extends React.Component {
                     <td className={'text-right'}>{awayOdds ? awayOdds.ratio : null}</td>
                 </tr>
                 <tr>
-                    <th>Số xu bạn muốn đặt<br/>(Đơn vị tính: nghìn VNĐ)</th>
+                    <th>Số xu bạn muốn đặt<br/>(Đơn vị tính: nghìn xu)</th>
                     <td><Input className={'text-right'} value={this.state.homeBet} onChange={(e) => {
                         this.setState({homeBet: e.target.value, drawBet: 0, awayBet: 0})
                     }}/></td>
