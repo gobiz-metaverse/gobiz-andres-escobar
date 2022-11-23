@@ -2,7 +2,6 @@
 
 ## Các chức năng còn thiếu
 
-- [ ] Sử dụng path riêng cho việc lấy token, redirect về trang ban đầu
 - [ ] Không yêu cầu đăng nhập vẫn có thể xem thông tin trận đấu
 - [ ] Hiển thị số tiền thực nhận
 - [ ] Phân biệt những trận đã kết thúc
@@ -16,3 +15,4 @@
 - [ ] Chặn không cho bet sau khi trận đã bắt đầu
 - [ ] Đăng xuất
 - [ ] Hỗ trợ kèo Outright: đội vô địch
+- [ ] Sử dụng path riêng cho việc lấy token, redirect về trang ban đầu
