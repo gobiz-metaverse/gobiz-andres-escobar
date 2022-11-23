@@ -30,6 +30,9 @@ export default class BetRoute extends React.Component{
 
         if (params && params['access-token']) {
             LocalStore.getInstance().save('bet_session', decodeURI(params['access-token']))
+            window.location = '/'
+
+            //TODO: redirect đến đúng trang
         }
         else {
             let bet_session = LocalStore.getInstance().read('bet_session');

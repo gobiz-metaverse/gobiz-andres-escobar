@@ -99,11 +99,12 @@ export default class Match extends React.Component {
             <Link to={'/'}>Trở về trang chủ</Link>
             <h1>{this.state.match.homeTeam.name} vs {this.state.match.awayTeam.name}</h1>
 
-            Hướng dẫn chơi: bạn hãy điền số xu bạn muốn đặt (đơn vị tính nghìn VNĐ, tức là nếu bạn nhập 100 tương
-            đương bạn muốn đặt 100k VNĐ).
+            Hướng dẫn chơi: bạn hãy điền số xu bạn muốn đặt (đơn vị tính nghìn, tức là nếu bạn nhập 100 tương
+            đương bạn muốn đặt 100k).
             Sau đó click vào nút "Xác nhận kèo" để xác nhận tham gia.<br/>
             Bạn có thể đặt nhiều lần, với các tỉ lệ khác nhau miễn sao tổng số xu bạn tham gia một kèo nhỏ hơn giới
-            hạn nên vui lòng chú ý lịch sử các lần đặt của mình.
+            hạn nên vui lòng chú ý lịch sử các lần đặt của mình.<br/>
+            Việc bạn tham gia chơi trò chơi này mục đích chính là để đóng góp cho quỹ liên hoan xem World Cup, vui lòng giữ tinh thần vui vẻ là chính.
             <table className={'table'} style={{maxWidth: '800px'}}>
                 <tr>
                     <th></th>
