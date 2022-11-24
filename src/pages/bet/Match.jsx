@@ -96,7 +96,7 @@ export default class Match extends React.Component {
         // console.info(homeOdds, this.state.homeBet);
 
         return <StandardLayout>
-            <Link to={'/'}>Trở về trang chủ</Link>
+            <Link to={'/'} className='text-blue-500'>Trở về trang chủ</Link>
             <h1>{this.state.match.homeTeam.name} vs {this.state.match.awayTeam.name}</h1>
 
             Hướng dẫn chơi: bạn hãy điền số xu bạn muốn đặt (đơn vị tính nghìn, tức là nếu bạn nhập 100 tương

@@ -37,7 +37,7 @@ class AppRootComponent extends React.Component {
     componentDidMount() {
         setTimeout(() => this.setState({
             initAppStatus: 'success'
-        }), 3000);
+        }), 1500);
     }
 
     render() {

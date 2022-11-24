@@ -5,7 +5,7 @@ import moment from "moment";
 import MatchService from "../../services/bet/MatchService";
 import ReactCountryFlag from "react-country-flag";
 import "./styles.css";
-import { first, groupBy, isEmpty, orderBy } from "lodash";
+import { first, groupBy, isEmpty, orderBy, reverse } from "lodash";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -27,12 +27,13 @@ class Dashboard extends React.Component {
               started: (moment(item.startTime)).isBefore(moment())
             }))
           : [];
-        console.log('currentData', currentData)
         const groupDate = !isEmpty(currentData)
-          ? groupBy(orderBy(currentData, ['startTime', 'asc']), "date")
+          ? groupBy(currentData, "date")
           : [];
-        const finalMatch = !isEmpty(groupDate)
-          ? Object.values(groupDate).map((iMatch) => ({
+          
+        const newLatest = !isEmpty(groupDate) ? Object.values(groupDate) : []
+        const finalMatch = !isEmpty(newLatest)
+          ? reverse(newLatest).map((iMatch) => ({
               title: !isEmpty(first(iMatch))
                 ? `Group State - ${moment(first(iMatch).startTime).calendar(
                     null,
@@ -74,7 +75,11 @@ class Dashboard extends React.Component {
                     </Col>
                     {item.children.map((iChild, iChildIndex) => (
                       <Col key={iChildIndex} xs={24} sm={24} md={24} lg={12}>
-                        <Card className={iChild.started ? 'bg-gray-50' : ''}>
+                        <Card className={iChild.started ? 'bg-gray-50' : 'cursor-pointer'} onClick={() =>{
+                          if(!iChild.started){
+                            this.props.history.push(`/matches/${iChild.id}`)
+                          }
+                        }}>
                           <Typography.Text>Group {iChild.awayTeam.groupCode}</Typography.Text>
                           <Row gutter={15}>
                             <Col span={16}>
