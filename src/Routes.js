@@ -6,7 +6,7 @@ import BetRoute from './pages/BetRoute'
 import {TopPlaying} from "./pages/bet/TopPlaying";
 import BetHistory from "./pages/bet/BetHistory";
 
-const AsyncDashboard = asyncComponent(() => import("./pages/Dashboard"));
+const AsyncDashboard = asyncComponent(() => import("./pages/dashboard"));
 const AsyncMatch = asyncComponent(() => import("./pages/bet/Match"));
 //import Warehouse from "./containers/Warehouse";
 
