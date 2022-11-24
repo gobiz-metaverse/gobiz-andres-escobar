@@ -52,6 +52,11 @@ export default class Match extends React.Component {
         })
     }
 
+    loadBets() {
+        //TODO: bao giờ có được thông tin user hiện tại thì mới có thể làm chỗ này
+        MatchService.getBetsByMatchAndUser(this.state.match.code, 1);
+    }
+
     confirmBet =() => {
         this.setState({
             betting: true
