@@ -1,4 +1,3 @@
-import {LocalStore} from "../../utils/LocalStore";
 import {LOGIN_URL} from "./Consts";
 
 export function handleResponse(response) {

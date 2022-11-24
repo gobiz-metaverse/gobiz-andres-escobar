@@ -2,8 +2,7 @@ import React, {Component} from 'react'
 import {Layout, Menu, Breadcrumb} from 'antd';
 import SiteFooter from "../pages/components/SiteFooter";
 import {Link} from "react-router-dom";
-import {SketchOutlined, ToolOutlined, ProfileOutlined, CheckSquareOutlined} from '@ant-design/icons';
-import ChangeLog from "../pages/changelog/ChangeLog";
+import {ProfileOutlined} from '@ant-design/icons';
 
 const {Header, Content, Footer, Sider} = Layout;
 const SubMenu = Menu.SubMenu;
