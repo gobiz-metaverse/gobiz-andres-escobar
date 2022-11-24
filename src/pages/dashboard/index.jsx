@@ -1,37 +1,57 @@
 import React from "react";
 import StandardLayout from "../../layouts/StandardLayout";
-import { List, Card, Row, Col, Typography, Space, Calendar } from "antd";
+import {
+  List,
+  Card,
+  Row,
+  Col,
+  Typography,
+  Space,
+  Calendar,
+  Button,
+} from "antd";
 import moment from "moment";
 import MatchService from "../../services/bet/MatchService";
 import ReactCountryFlag from "react-country-flag";
 import "./styles.css";
-import { first, groupBy, isEmpty, orderBy, reverse } from "lodash";
+import { first, groupBy, isEmpty, isEqual, reverse } from "lodash";
+import { LocalStore } from "../../utils/LocalStore";
+import { LOGIN_URL } from "../../services/bet/Consts";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       matches: [],
+      query: {
+        matchStartedFrom: moment()
+          .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+          .toISOString(),
+        matchStartedTo: moment()
+          .set({ hour: 23, minute: 59, second: 59, millisecond: 59 })
+          .toISOString(),
+      },
+      currentDate: moment()
     };
   }
-
-  componentDidMount() {
-    // {rangeTime: 'TODAY'}
-    MatchService.getMatches({}).then((response) => {
+  callMatch() {
+    MatchService.getMatches({
+      ...this.state.query,
+    }).then((response) => {
       if (response) {
         //TODO: sort matches
         const currentData = !isEmpty(response.body.data)
           ? response.body.data.map((item) => ({
               ...item,
               date: moment(item.startTime).format("DDMMYYYY"),
-              started: (moment(item.startTime)).isBefore(moment())
+              started: moment(item.startTime).isBefore(moment()),
             }))
           : [];
         const groupDate = !isEmpty(currentData)
           ? groupBy(currentData, "date")
           : [];
-          
-        const newLatest = !isEmpty(groupDate) ? Object.values(groupDate) : []
+
+        const newLatest = !isEmpty(groupDate) ? Object.values(groupDate) : [];
         const finalMatch = !isEmpty(newLatest)
           ? reverse(newLatest).map((iMatch) => ({
               title: !isEmpty(first(iMatch))
@@ -57,9 +77,18 @@ class Dashboard extends React.Component {
     });
   }
 
+  componentDidMount() {
+    // {rangeTime: 'TODAY'}
+    this.callMatch();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (!isEqual(prevState.query, this.state.query)) {
+      this.callMatch();
+    }
+  }
+
   render() {
-    const { matches } = this.state;
-    console.log('matches', matches)
+    const { matches, query, currentDate } = this.state;
     return (
       <StandardLayout {...this.props} title={"Welcome to Olympus"}>
         <Row gutter={16}>
@@ -75,15 +104,30 @@ class Dashboard extends React.Component {
                     </Col>
                     {item.children.map((iChild, iChildIndex) => (
                       <Col key={iChildIndex} xs={24} sm={24} md={24} lg={12}>
-                        <Card className={iChild.started ? 'bg-gray-50' : 'cursor-pointer'} onClick={() =>{
-                          if(!iChild.started){
-                            this.props.history.push(`/matches/${iChild.id}`)
+                        <Card
+                          className={
+                            iChild.started ? "bg-gray-50" : "cursor-pointer"
                           }
-                        }}>
-                          <Typography.Text>Group {iChild.awayTeam.groupCode}</Typography.Text>
+                          onClick={() => {
+                            if (!iChild.started) {
+                              if (
+                                LocalStore.getInstance().read("bet_session")
+                              ) {
+                                this.props.history.push(
+                                  `/matches/${iChild.id}`
+                                );
+                              } else {
+                                window.location = LOGIN_URL;
+                              }
+                            }
+                          }}
+                        >
+                          <Typography.Text>
+                            Group {iChild.awayTeam.groupCode}
+                          </Typography.Text>
                           <Row gutter={15}>
                             <Col span={16}>
-                            <div className="flex justify-between items-center">
+                              <div className="flex justify-between items-center">
                                 <Space>
                                   <ReactCountryFlag
                                     className="emojiFlag"
@@ -99,7 +143,9 @@ class Dashboard extends React.Component {
                                     {iChild.homeTeam.name}
                                   </Typography.Text>
                                 </Space>
-                                <Typography.Text strong>{iChild.matchTimeHome}</Typography.Text>
+                                <Typography.Text strong>
+                                  {iChild.matchTimeHome}
+                                </Typography.Text>
                               </div>
                               <div className="flex justify-between items-center">
                                 <Space>
@@ -117,7 +163,9 @@ class Dashboard extends React.Component {
                                     {iChild.awayTeam.name}
                                   </Typography.Text>
                                 </Space>
-                                <Typography.Text strong>{iChild.matchTimeAway}</Typography.Text>
+                                <Typography.Text strong>
+                                  {iChild.matchTimeAway}
+                                </Typography.Text>
                               </div>
                             </Col>
                             <Col
@@ -126,9 +174,7 @@ class Dashboard extends React.Component {
                             >
                               <p>
                                 {iChild.startTime
-                                  ? moment(iChild.startTime).format(
-                                      "DD/MM"
-                                    )
+                                  ? moment(iChild.startTime).format("DD/MM")
                                   : ""}
                               </p>
                               <p>
@@ -147,7 +193,48 @@ class Dashboard extends React.Component {
             />
           </Col>
           <Col xs={24} sm={24} md={12} lg={8}>
-            <Calendar fullscreen={false} headerRender={false} />
+            <Calendar
+              fullscreen={false}
+              headerRender={false}
+              value={currentDate}
+              onChange={(value) => {
+                console.log("value", value);
+                this.setState({
+                  currentDate: value,
+                  query: {
+                    matchStartedFrom: moment(value)
+                      .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+                      .toISOString(),
+                    matchStartedTo: moment(value)
+                      .set({
+                        hour: 23,
+                        minute: 59,
+                        second: 59,
+                        millisecond: 59,
+                      })
+                      .toISOString(),
+                  },
+                });
+              }}
+            />
+            {!isEmpty(matches) &&
+              query.matchStartedFrom &&
+              query.matchStartedTo && (
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    this.setState({
+                      currentDate: '',
+                      query: {
+                        matchStartedFrom: "",
+                        matchStartedTo: "",
+                      },
+                    });
+                  }}
+                >
+                  Xem tất cả trận đấu
+                </Button>
+              )}
           </Col>
         </Row>
       </StandardLayout>

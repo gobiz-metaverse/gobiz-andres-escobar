@@ -3,7 +3,7 @@ import { Layout, Menu, Breadcrumb } from "antd";
 import SiteFooter from "../pages/components/SiteFooter";
 import { Link } from "react-router-dom";
 import { ProfileOutlined } from "@ant-design/icons";
-
+import "./styles.css";
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -42,6 +42,7 @@ class StandardLayout extends Component {
           <div className="logo flex justify-center pt-3">
             <Link to={"/"}>
               <img
+                className="logo--response"
                 src={
                   "https://gobiz.vn/wp-content/themes/gobiz/fav/favicon-32x32.png"
                 }
@@ -57,9 +58,6 @@ class StandardLayout extends Component {
               mode="inline"
               defaultOpenKeys={["report"]}
             >
-              <Menu.Item key={"home"}>
-                <Link to={"/"}>Trang chủ</Link>
-              </Menu.Item>
               <SubMenu
                 icon={<ProfileOutlined />}
                 title={"Thống kê"}
