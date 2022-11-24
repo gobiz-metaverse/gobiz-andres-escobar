@@ -27,7 +27,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install
       - name: Build
         env:
           REACT_APP_API_BASE_URL: https://fifa.gobizdev.com/api
