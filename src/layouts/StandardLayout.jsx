@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Breadcrumb, Dropdown, Avatar, Row, Col, Space } from 'antd'
+import { Layout, Menu, Breadcrumb, Dropdown, Row, Col, Space } from 'antd'
 import SiteFooter from '../pages/components/SiteFooter'
 import { Link } from 'react-router-dom'
 import { SketchOutlined, ToolOutlined, ProfileOutlined, CheckSquareOutlined, DownOutlined } from '@ant-design/icons'
 import ChangeLog from '../pages/changelog/ChangeLog'
 import classes from './layout.module.css'
+import { parseJwt } from '../services/bet/utils'
+import jwtDecode from 'jwt-decode'
+import { LocalStore } from '../utils/LocalStore'
+import Avatar, { genConfig } from 'react-nice-avatar'
 
 const { Header, Content, Footer, Sider } = Layout
 const SubMenu = Menu.SubMenu
@@ -12,6 +16,7 @@ const SubMenu = Menu.SubMenu
 class StandardLayout extends Component {
 	state = {
 		collapsed: false,
+		name: '',
 	}
 
 	onCollapse = (collapsed) => {
@@ -19,6 +24,10 @@ class StandardLayout extends Component {
 	}
 
 	componentDidMount() {
+		const userInfo = LocalStore.getInstance().read('userInfo')
+		if (userInfo) {
+			this.setState({ name: userInfo.name })
+		}
 		if (this.props.title) {
 			document.title = this.props.title
 		}
@@ -167,8 +176,9 @@ class StandardLayout extends Component {
 					<Header style={{ background: '#fff', padding: 0 }}>
 						<Row align='middle' justify='space-between' className={classes.header}>
 							<Col>{this.props.header}</Col>
+
 							<Col>
-								<Dropdown
+								{/* <Dropdown
 									menu={{
 										items: [
 											{
@@ -186,9 +196,14 @@ class StandardLayout extends Component {
 									}}
 									trigger='hover'
                                     arrow
-								>
-                                    <Avatar size={40} src='' shape='circle' />
-								</Dropdown>
+								> */}
+								<Row align={'middle'} gutter={4} style={{cursor: 'pointer'}}>
+									<Col>
+										<Avatar style={{ width: '40px', height: '40px' }} sex={'woman'} />
+									</Col>
+									<Col><span>{this.state.name}</span></Col>
+								</Row>
+								{/* </Dropdown> */}
 							</Col>
 						</Row>
 					</Header>

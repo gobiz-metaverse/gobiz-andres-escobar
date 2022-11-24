@@ -4,7 +4,6 @@ import StandardLayout from '../../layouts/StandardLayout'
 import RuleService from '../../services/RuleServices'
 import ComponentLoading from '../ComponentLoading'
 import Loading from '../Loading'
-import './rule.module.css'
 
 export default class BetRule extends Component {
 	constructor(props) {
@@ -15,16 +14,7 @@ export default class BetRule extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this.setState({ loading: true })
-		RuleService.getRule()
-			.then((res) => {
-				if (res.status === 200) {
-					this.setState({ rule: res.body.data })
-				}
-			})
-			.finally(() => this.setState({ loading: false }))
-	}
+	
 	render() {
 		return  (
 			<StandardLayout>
@@ -33,4 +23,3 @@ export default class BetRule extends Component {
 		)
 	}
 }
-
