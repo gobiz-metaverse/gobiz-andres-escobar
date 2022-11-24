@@ -5,7 +5,7 @@ import moment from "moment";
 import MatchService from "../../services/bet/MatchService";
 import ReactCountryFlag from "react-country-flag";
 import "./styles.css";
-import { first, groupBy, isEmpty } from "lodash";
+import { first, groupBy, isEmpty, orderBy } from "lodash";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -20,15 +20,16 @@ class Dashboard extends React.Component {
     MatchService.getMatches({}).then((response) => {
       if (response) {
         //TODO: sort matches
-        console.log("response.body.data", response.body.data);
         const currentData = !isEmpty(response.body.data)
           ? response.body.data.map((item) => ({
               ...item,
               date: moment(item.startTime).format("DDMMYYYY"),
+              started: (moment(item.startTime)).isBefore(moment())
             }))
           : [];
+        console.log('currentData', currentData)
         const groupDate = !isEmpty(currentData)
-          ? groupBy(currentData, "date")
+          ? groupBy(orderBy(currentData, ['startTime', 'asc']), "date")
           : [];
         const finalMatch = !isEmpty(groupDate)
           ? Object.values(groupDate).map((iMatch) => ({
@@ -57,6 +58,7 @@ class Dashboard extends React.Component {
 
   render() {
     const { matches } = this.state;
+    console.log('matches', matches)
     return (
       <StandardLayout {...this.props} title={"Welcome to Olympus"}>
         <Row gutter={16}>
@@ -72,10 +74,27 @@ class Dashboard extends React.Component {
                     </Col>
                     {item.children.map((iChild, iChildIndex) => (
                       <Col key={iChildIndex} xs={24} sm={24} md={12}>
-                        <Card className="p-1">
-                          <Typography.Text>Group ...</Typography.Text>
+                        <Card className={iChild.started ? 'bg-gray-50' : ''}>
+                          <Typography.Text>Group {iChild.awayTeam.groupCode}</Typography.Text>
                           <Row gutter={15}>
                             <Col span={16}>
+                            <div className="flex justify-between items-center">
+                                <Space>
+                                  <ReactCountryFlag
+                                    className="emojiFlag"
+                                    countryCode={iChild.homeTeam.flag}
+                                    style={{
+                                      fontSize: "24px",
+                                      lineHeight: "24px",
+                                    }}
+                                    aria-label={iChild.homeTeam.name}
+                                  />
+                                  <Typography.Text>
+                                    {iChild.homeTeam.name}
+                                  </Typography.Text>
+                                </Space>
+                                <Typography.Text strong>{iChild.matchTimeHome}</Typography.Text>
+                              </div>
                               <div className="flex justify-between items-center">
                                 <Space>
                                   <ReactCountryFlag
@@ -91,24 +110,7 @@ class Dashboard extends React.Component {
                                     {iChild.awayTeam.name}
                                   </Typography.Text>
                                 </Space>
-                                <Typography.Text strong></Typography.Text>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <Space>
-                                  <ReactCountryFlag
-                                    className="emojiFlag"
-                                    countryCode={iChild.homeTeam.flag}
-                                    style={{
-                                      fontSize: "24px",
-                                      lineHeight: "24px",
-                                    }}
-                                    aria-label={iChild.homeTeam.name}
-                                  />
-                                  <Typography.Text>
-                                    {iChild.homeTeam.name}
-                                  </Typography.Text>
-                                </Space>
-                                <Typography.Text strong></Typography.Text>
+                                <Typography.Text strong>{iChild.matchTimeAway}</Typography.Text>
                               </div>
                             </Col>
                             <Col
