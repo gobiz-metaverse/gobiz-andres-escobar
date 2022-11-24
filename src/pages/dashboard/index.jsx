@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
                                 <Space>
                                   <ReactCountryFlag
                                     className="emojiFlag"
-                                    countryCode={iChild.homeTeam.flag}
+                                    countryCode={iChild.homeTeam.code}
                                     style={{
                                       fontSize: "24px",
                                       lineHeight: "24px",
@@ -99,7 +99,7 @@ class Dashboard extends React.Component {
                                 <Space>
                                   <ReactCountryFlag
                                     className="emojiFlag"
-                                    countryCode={iChild.awayTeam.flag}
+                                    countryCode={iChild.awayTeam.code}
                                     style={{
                                       fontSize: "24px",
                                       lineHeight: "24px",
