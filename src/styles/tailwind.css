@@ -571,6 +571,10 @@ video {
   position: relative;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
 .inline {
   display: inline;
 }
@@ -624,12 +628,13 @@ video {
   padding: 0.5rem;
 }
 
-.p-1 {
-  padding: 0.25rem;
-}
-
 .text-right {
   text-align: right;
+}
+
+.text-orange-400 {
+  --tw-text-opacity: 1;
+  color: rgb(251 146 60 / var(--tw-text-opacity));
 }
 
 .filter {
