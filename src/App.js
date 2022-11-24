@@ -1,7 +1,6 @@
 import React from 'react';
 import routes from './Routes'
 import './App.css';
-import './olympus.scss';
 import Loading from "./pages/Loading";
 // import OpenReplay from '@openreplay/tracker';
 //import trackerAssist from '@openreplay/tracker-assist';
