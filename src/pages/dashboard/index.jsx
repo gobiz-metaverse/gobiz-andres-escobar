@@ -88,6 +88,7 @@ class Dashboard extends React.Component {
                                       lineHeight: "24px",
                                     }}
                                     aria-label={iChild.homeTeam.name}
+                                    svg
                                   />
                                   <Typography.Text>
                                     {iChild.homeTeam.name}
@@ -105,6 +106,7 @@ class Dashboard extends React.Component {
                                       lineHeight: "24px",
                                     }}
                                     aria-label={iChild.awayTeam.name}
+                                    svg
                                   />
                                   <Typography.Text>
                                     {iChild.awayTeam.name}
@@ -120,7 +122,7 @@ class Dashboard extends React.Component {
                               <p>
                                 {iChild.startTime
                                   ? moment(iChild.startTime).format(
-                                      "dddd, Do MMM"
+                                      "DD/MM"
                                     )
                                   : ""}
                               </p>
