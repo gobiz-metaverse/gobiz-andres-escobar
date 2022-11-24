@@ -20,7 +20,8 @@ export default class Match extends React.Component {
             odds: [],
             homeBet: 0,
             drawBet: 0,
-            awayBet: 0
+            awayBet: 0,
+            betting: false
         }
     }
 
@@ -52,6 +53,10 @@ export default class Match extends React.Component {
     }
 
     confirmBet =() => {
+        this.setState({
+            betting: true
+        });
+
         if (this.state.homeBet > 100 || (this.state.drawBet > 100) || (this.state.awayBet > 100)) {
             message.error(`Số xu bet tối đa của vòng hiện tại là 100k, vui lòng nhập con số thấp hơn 100k`);
             return
@@ -70,6 +75,12 @@ export default class Match extends React.Component {
             MatchService.bet(this.state.match.id, '1x2', 'x', this.state.drawBet*1000).then(handleResponse);
         if (this.state.awayBet > 0)
             MatchService.bet(this.state.match.id, '1x2', '2', this.state.awayBet*1000).then(handleResponse);
+
+        setTimeout(()=> {
+            this.setState({
+                betting: false
+            })
+        },5000)
     };
 
     render() {
@@ -118,6 +129,12 @@ export default class Match extends React.Component {
                     <td className={'text-right'}>{drawOdds ? drawOdds.ratio : null}</td>
                     <td className={'text-right'}>{awayOdds ? awayOdds.ratio : null}</td>
                 </tr>
+                {/*<tr>*/}
+                {/*    <th>Đã đặt</th>*/}
+                {/*    <td></td>*/}
+                {/*    <td></td>*/}
+                {/*    <td></td>*/}
+                {/*</tr>*/}
                 <tr>
                     <th>Số xu bạn muốn đặt<br/>(Đơn vị tính: nghìn xu)</th>
                     <td><Input className={'text-right'} value={this.state.homeBet} onChange={(e) => {
@@ -144,7 +161,7 @@ export default class Match extends React.Component {
                 </tr>
                 <tr>
                     <td colSpan={4} className={'text-right'}>
-                        <Button type={'primary'} onClick={this.confirmBet}>Xác nhận kèo</Button>
+                        <Button type={'primary'} loading={this.state.betting} onClick={this.confirmBet}>Xác nhận kèo</Button>
                     </td>
                 </tr>
             </table>
