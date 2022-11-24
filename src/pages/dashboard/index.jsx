@@ -62,7 +62,7 @@ class Dashboard extends React.Component {
     return (
       <StandardLayout {...this.props} title={"Welcome to Olympus"}>
         <Row gutter={16}>
-          <Col xs={24} sm={24} md={16} lg={18}>
+          <Col xs={24} sm={24} md={12} lg={16}>
             <List
               loading={isEmpty(matches)}
               dataSource={matches}
@@ -73,7 +73,7 @@ class Dashboard extends React.Component {
                       <Typography.Text>{item.title}</Typography.Text>
                     </Col>
                     {item.children.map((iChild, iChildIndex) => (
-                      <Col key={iChildIndex} xs={24} sm={24} md={12}>
+                      <Col key={iChildIndex} xs={24} sm={24} md={24} lg={12}>
                         <Card className={iChild.started ? 'bg-gray-50' : ''}>
                           <Typography.Text>Group {iChild.awayTeam.groupCode}</Typography.Text>
                           <Row gutter={15}>
@@ -141,7 +141,7 @@ class Dashboard extends React.Component {
               )}
             />
           </Col>
-          <Col xs={24} sm={24} md={8} lg={6}>
+          <Col xs={24} sm={24} md={12} lg={8}>
             <Calendar fullscreen={false} headerRender={false} />
           </Col>
         </Row>
