@@ -434,8 +434,16 @@ export default class Match extends React.Component {
                         <Statistic
                             title="Số tiền thực nhận:"
                             suffix="Xu"
-                            value={0}
-                            precision={2}
+                            value={this.state.bets.reduce((prev, curr) => {
+                                if (curr.status === 'WIN') {
+                                    return prev + (curr.prize - curr.money) * 0.9
+                                }
+                                if (curr.status === 'LOSE') {
+                                    return prev - curr.money
+                                }
+                                return prev
+                            }, 0)}
+                            precision={0}
                             valueStyle={{color: "#3f8600"}}
                         />,
                     ]}
@@ -487,6 +495,9 @@ export default class Match extends React.Component {
 
                     <Table
                         dataSource={this.state.bets}
+                        scroll={{
+                            x: 300
+                        }}
                         columns={betColumns}
                         pagination={false}
                         rowKey={'id'}

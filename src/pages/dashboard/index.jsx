@@ -27,7 +27,8 @@ class Dashboard extends React.Component {
         matchStartedFrom: '',
         matchStartedTo: '',
       },
-      currentDate: ''
+      currentDate: '',
+      bets: []
     };
   }
   callMatch() {
@@ -68,10 +69,22 @@ class Dashboard extends React.Component {
           : [];
         this.setState({
           matches: finalMatch,
+        },()=> {
+            this.loadBets()
         });
       }
     });
   }
+
+  loadBets = ()=> {
+      let user = LocalStore.getInstance().read('user');
+      if (user)
+      MatchService.getBetsByUser(user.preferred_username).then((response) => {
+          this.setState({
+              bets: response.body.data
+          })
+      })
+  };
 
   componentDidMount() {
     // {rangeTime: 'TODAY'}
@@ -98,7 +111,20 @@ class Dashboard extends React.Component {
                     <Col span={24} className="border border-b-0 bg-gray-50 p-2">
                       <Typography.Text>{item.title}</Typography.Text>
                     </Col>
-                    {item.children.map((iChild, iChildIndex) => (
+                    {item.children.map((iChild, iChildIndex) => {
+                        let totalHome = this.state.bets.filter(b=>b.matchId === iChild.id && b.code==='1').reduce((prev, curr) => {
+                            return prev + curr.money
+                        },0);
+
+                        let totalAway = this.state.bets.filter(b=>b.matchId === iChild.id && b.code==='2').reduce((prev, curr) => {
+                            return prev + curr.money
+                        },0);
+
+                        let totalDraw = this.state.bets.filter(b=>b.matchId === iChild.id && b.code==='x').reduce((prev, curr) => {
+                            return prev + curr.money
+                        },0);
+
+                        return (
                       <Col key={iChildIndex} xs={24} sm={24} md={24} lg={12}>
                         <Card
                           className={
@@ -138,9 +164,15 @@ class Dashboard extends React.Component {
                                   </Typography.Text>
                                 </Space>
                                 <Typography.Text strong>
-                                  {iChild.matchTimeHome}
+                                  {iChild.matchTimeHome ? iChild.matchTimeHome : totalHome > 0 ? `(${totalHome/1000}K)`: ''}
                                 </Typography.Text>
                               </div>
+                                <div className="flex justify-between items-center">
+                                  <Space> </Space>
+                                    <Typography.Text strong>
+                                        {iChild.matchTimeAway ? '' : totalDraw > 0 ? `(${totalDraw/1000}K)`: ''}
+                                    </Typography.Text>
+                                </div>
                               <div className="flex justify-between items-center">
                                 <Space>
                                   <ReactCountryFlag
@@ -158,7 +190,7 @@ class Dashboard extends React.Component {
                                   </Typography.Text>
                                 </Space>
                                 <Typography.Text strong>
-                                  {iChild.matchTimeAway}
+                                  {iChild.matchTimeAway ? iChild.matchTimeAway : totalAway > 0 ? `(${totalAway/1000}K)` : ''}
                                 </Typography.Text>
                               </div>
                             </Col>
@@ -180,7 +212,8 @@ class Dashboard extends React.Component {
                           </Row>
                         </Card>
                       </Col>
-                    ))}
+                    )}
+                    )}
                   </Row>
                 </List.Item>
               )}

@@ -56,4 +56,16 @@ export default class MatchService {
             }
         },bet_session,handleResponse)
     }
+
+    static getBetsByUser(userId) {
+        let bet_session = LocalStore.getInstance().read('bet_session');
+
+        return BetClient.requestPromise({
+            endpoint: BET_BASE_URL + `/bets`,
+            method: 'GET',
+            queryString: {
+                username: userId
+            }
+        },bet_session,handleResponse)
+    }
 }
