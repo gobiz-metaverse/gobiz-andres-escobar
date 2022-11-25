@@ -24,14 +24,10 @@ class Dashboard extends React.Component {
     this.state = {
       matches: [],
       query: {
-        matchStartedFrom: moment()
-          .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
-          .toISOString(),
-        matchStartedTo: moment()
-          .set({ hour: 23, minute: 59, second: 59, millisecond: 59 })
-          .toISOString(),
+        matchStartedFrom: '',
+        matchStartedTo: '',
       },
-      currentDate: moment()
+      currentDate: ''
     };
   }
   callMatch() {
@@ -106,19 +102,17 @@ class Dashboard extends React.Component {
                       <Col key={iChildIndex} xs={24} sm={24} md={24} lg={12}>
                         <Card
                           className={
-                            iChild.started ? "bg-gray-50" : "cursor-pointer"
+                            iChild.started ? "bg-gray-50 cursor-pointer" : "cursor-pointer"
                           }
                           onClick={() => {
-                            if (!iChild.started) {
-                              if (
-                                LocalStore.getInstance().read("bet_session")
-                              ) {
-                                this.props.history.push(
-                                  `/matches/${iChild.id}`
-                                );
-                              } else {
-                                window.location = LOGIN_URL;
-                              }
+                            if (
+                              LocalStore.getInstance().read("bet_session")
+                            ) {
+                              this.props.history.push(
+                                `/matches/${iChild.id}`
+                              );
+                            } else {
+                              window.location = LOGIN_URL;
                             }
                           }}
                         >
@@ -217,24 +211,6 @@ class Dashboard extends React.Component {
                 });
               }}
             />
-            {!isEmpty(matches) &&
-              query.matchStartedFrom &&
-              query.matchStartedTo && (
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    this.setState({
-                      currentDate: '',
-                      query: {
-                        matchStartedFrom: "",
-                        matchStartedTo: "",
-                      },
-                    });
-                  }}
-                >
-                  Xem tất cả trận đấu
-                </Button>
-              )}
           </Col>
         </Row>
       </StandardLayout>
