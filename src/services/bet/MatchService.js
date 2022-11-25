@@ -52,7 +52,7 @@ export default class MatchService {
             method: 'GET',
             queryString: {
                 matchCode: matchCode,
-                userId: userId
+                username: userId
             }
         },bet_session,handleResponse)
     }
