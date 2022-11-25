@@ -53,7 +53,7 @@ export default class BetRoute extends React.Component {
             let bet_session = LocalStore.getInstance().read('bet_session');
             let user = LocalStore.getInstance().read('user');
 
-            if (!bet_session || (user.exp - 300) * 1000 < new Date().getTime()) {
+            if (!bet_session || !user || (user.exp - 300) * 1000 < new Date().getTime()) {
                 window.location = LOGIN_URL
             }
         }
