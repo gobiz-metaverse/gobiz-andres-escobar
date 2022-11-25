@@ -78,12 +78,12 @@ export default class Match extends React.Component {
       betting: true,
     });
     if (
-      this.state.homeBet > 100 ||
-      this.state.drawBet > 100 ||
-      this.state.awayBet > 100
+      this.state.homeBet > 200 ||
+      this.state.drawBet > 200 ||
+      this.state.awayBet > 200
     ) {
       message.error(
-        `Số xu bet tối đa của vòng hiện tại là 100k, vui lòng nhập con số thấp hơn 100k`
+        `Số xu bet tối đa của vòng hiện tại là 200k, vui lòng nhập con số thấp hơn 200k`
       );
       return;
     }
