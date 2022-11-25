@@ -2,6 +2,7 @@ import {Route} from "react-router-dom";
 import {LocalStore} from "../utils/LocalStore";
 import React from "react";
 import {LOGIN_URL} from "../services/bet/Consts";
+import jwtDecode from "jwt-decode";
 
 function parseQueryStringToObject(queryString) {
     if (queryString && queryString.indexOf('?') > -1) {
@@ -30,24 +31,33 @@ export default class BetRoute extends React.Component {
 
         if (params && params['access-token']) {
             LocalStore.getInstance().save('bet_session', decodeURI(params['access-token']))
-            window.location = '/'
+
+            if (params['id_token']) {
+                let jwt = params['id_token'];
+                let userData = jwtDecode(jwt);
+                console.info(userData);
+                LocalStore.getInstance().save('user', userData)
+            }
+
+            window.location = '/';
 
             //TODO: redirect đến đúng trang
-        } else {
-            if (window.location.pathname !== '/') {
-                let bet_session = LocalStore.getInstance().read('bet_session');
-
-                if (!bet_session) {
-                    window.location = LOGIN_URL
-                }
-            }
         }
-
     }
 
     render() {
         const {component: Component, RouteKey, location, ...rest} = this.props;
         const Key = RouteKey ? location.pathname + location.search : null;
+
+        if (location.pathname !== '/') {
+            let bet_session = LocalStore.getInstance().read('bet_session');
+            let user = LocalStore.getInstance().read('user');
+
+            if (!bet_session || (user.exp - 300) * 1000 < new Date().getTime()) {
+                window.location = LOGIN_URL
+            }
+        }
+
         return (
             <Route exact={true} {...rest} key={Key} render={props => {
                 return (
