@@ -164,13 +164,13 @@ class Dashboard extends React.Component {
                                   </Typography.Text>
                                 </Space>
                                 <Typography.Text strong>
-                                  {iChild.matchTimeHome ? iChild.matchTimeHome : totalHome > 0 ? `(${totalHome/1000}K)`: ''}
+                                  {iChild.matchTimeHome!==null ? iChild.matchTimeHome : totalHome > 0 ? `(${totalHome/1000}K)`: ''}
                                 </Typography.Text>
                               </div>
                                 <div className="flex justify-between items-center">
                                   <Space> </Space>
                                     <Typography.Text strong>
-                                        {iChild.matchTimeAway ? '' : totalDraw > 0 ? `(${totalDraw/1000}K)`: ''}
+                                        {iChild.matchTimeAway!==null ? '' : totalDraw > 0 ? `(${totalDraw/1000}K)`: ''}
                                     </Typography.Text>
                                 </div>
                               <div className="flex justify-between items-center">
@@ -190,7 +190,7 @@ class Dashboard extends React.Component {
                                   </Typography.Text>
                                 </Space>
                                 <Typography.Text strong>
-                                  {iChild.matchTimeAway ? iChild.matchTimeAway : totalAway > 0 ? `(${totalAway/1000}K)` : ''}
+                                  {iChild.matchTimeAway!==null ? iChild.matchTimeAway : totalAway > 0 ? `(${totalAway/1000}K)` : ''}
                                 </Typography.Text>
                               </div>
                             </Col>
