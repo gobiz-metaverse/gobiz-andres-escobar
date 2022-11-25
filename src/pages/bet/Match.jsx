@@ -4,7 +4,6 @@ import MatchService from "../../services/bet/MatchService";
 import ComponentLoading from "../ComponentLoading";
 import PageNotFound from "../404";
 import {
-  Input,
   Button,
   message,
   Tag,
@@ -333,6 +332,9 @@ export default class Match extends React.Component {
           </Descriptions>
           <Table
             dataSource={dataSource}
+            scroll={{
+                x: 600
+            }}
             columns={columns}
             loading={isEmpty(this.state.match)}
             pagination={false}

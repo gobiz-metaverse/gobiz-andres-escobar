@@ -1,6 +1,5 @@
 import React from "react";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Player, Controls } from "@lottiefiles/react-lottie-player";
+import { Player } from "@lottiefiles/react-lottie-player";
 import football from '../styles/football.json'
 
 class Loading extends React.Component {
