@@ -21,24 +21,26 @@ function parseQueryStringToObject(queryString) {
 
 export default class BetRoute extends React.Component{
     componentDidMount() {
-        let queryString = window.location.search || '';
-        if (queryString.indexOf('?') > -1) {
-            queryString = queryString.replace(/\?/g, '')
-        }
-
-        const params = parseQueryStringToObject(queryString);
-
-        if (params && params['access-token']) {
-            LocalStore.getInstance().save('bet_session', decodeURI(params['access-token']))
-            window.location = '/'
-
-            //TODO: redirect đến đúng trang
-        }
-        else {
-            let bet_session = LocalStore.getInstance().read('bet_session');
-
-            if (!bet_session) {
-                window.location = LOGIN_URL
+        if(window.location.pathname !== '/'){
+            let queryString = window.location.search || '';
+            if (queryString.indexOf('?') > -1) {
+                queryString = queryString.replace(/\?/g, '')
+            }
+    
+            const params = parseQueryStringToObject(queryString);
+    
+            if (params && params['access-token']) {
+                LocalStore.getInstance().save('bet_session', decodeURI(params['access-token']))
+                window.location = '/'
+    
+                //TODO: redirect đến đúng trang
+            }
+            else {
+                let bet_session = LocalStore.getInstance().read('bet_session');
+    
+                if (!bet_session) {
+                    window.location = LOGIN_URL
+                }
             }
         }
 
@@ -46,9 +48,7 @@ export default class BetRoute extends React.Component{
 
     render(){
         const { component: Component, RouteKey, location, ...rest } = this.props;
-        console.log('this.props', this.props)
         const Key = RouteKey ? location.pathname + location.search : null;
-
         return(
             <Route exact={true} {...rest} key={Key} render={props => {
                 return (

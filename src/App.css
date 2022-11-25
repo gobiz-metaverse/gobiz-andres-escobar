@@ -1,5 +1,5 @@
 @import '../node_modules/antd/dist/antd.css';
-@import './styles/tailwind.css';
+@import './styles/tailwindmap.css';
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
 @import "../node_modules/@syncfusion/ej2-layouts/styles/material.css";
@@ -32,7 +32,6 @@
   height: 40px;
   color: #fff;
   font-size: 24px;
-  padding-left: 5px;
 }
 
 #components-layout-demo-side .logo {
@@ -133,5 +132,9 @@
   padding: 10px;
 }
 .ant-btn-primary{
-  background-color: #1890ff !important;
+  background-color: #1890ff;
+}
+.ant-input-number{
+  width: 100%;
+  border-radius: 5px;
 }
