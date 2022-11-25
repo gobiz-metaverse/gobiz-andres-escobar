@@ -19,25 +19,24 @@ function parseQueryStringToObject(queryString) {
     return params;
 }
 
-export default class BetRoute extends React.Component{
+export default class BetRoute extends React.Component {
     componentDidMount() {
-        if(window.location.pathname !== '/'){
-            let queryString = window.location.search || '';
-            if (queryString.indexOf('?') > -1) {
-                queryString = queryString.replace(/\?/g, '')
-            }
-    
-            const params = parseQueryStringToObject(queryString);
-    
-            if (params && params['access-token']) {
-                LocalStore.getInstance().save('bet_session', decodeURI(params['access-token']))
-                window.location = '/'
-    
-                //TODO: redirect đến đúng trang
-            }
-            else {
+        let queryString = window.location.search || '';
+        if (queryString.indexOf('?') > -1) {
+            queryString = queryString.replace(/\?/g, '')
+        }
+
+        const params = parseQueryStringToObject(queryString);
+
+        if (params && params['access-token']) {
+            LocalStore.getInstance().save('bet_session', decodeURI(params['access-token']))
+            window.location = '/'
+
+            //TODO: redirect đến đúng trang
+        } else {
+            if (window.location.pathname !== '/') {
                 let bet_session = LocalStore.getInstance().read('bet_session');
-    
+
                 if (!bet_session) {
                     window.location = LOGIN_URL
                 }
@@ -46,15 +45,15 @@ export default class BetRoute extends React.Component{
 
     }
 
-    render(){
-        const { component: Component, RouteKey, location, ...rest } = this.props;
+    render() {
+        const {component: Component, RouteKey, location, ...rest} = this.props;
         const Key = RouteKey ? location.pathname + location.search : null;
-        return(
+        return (
             <Route exact={true} {...rest} key={Key} render={props => {
                 return (
                     <Component {...props} />
                 )
-            }} />
+            }}/>
         );
     }
 }
