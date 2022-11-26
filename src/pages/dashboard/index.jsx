@@ -8,7 +8,6 @@ import {
   Typography,
   Space,
   Calendar,
-  Button,
 } from "antd";
 import moment from "moment";
 import MatchService from "../../services/bet/MatchService";
@@ -84,7 +83,7 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { matches, query, currentDate } = this.state;
+    const { matches, currentDate } = this.state;
     return (
       <StandardLayout {...this.props} title={"Welcome to Olympus"}>
         <Row gutter={16}>

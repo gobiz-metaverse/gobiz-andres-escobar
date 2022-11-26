@@ -18,7 +18,7 @@ export default (
         <Switch>
             {/*<RequireLoginRoute exact path="/" component={AsyncDashboard}/>*/}
             <Route path="/todos" component={AsyncTodos}/>
-            <BetRoute exact path="/" component={AsyncDashboard}/>
+            <Route exact path="/" component={AsyncDashboard}/>
             <BetRoute exact path="/matches/:id" component={AsyncMatch}/>
             <BetRoute exact path="/report/top-playing" component={TopPlaying}/>
             <BetRoute exact path="/report/bet-history" component={BetHistory}/>

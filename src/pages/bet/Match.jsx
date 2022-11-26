@@ -13,11 +13,14 @@ import {
   Descriptions,
   Table,
   InputNumber,
-  Row
+  Row,
+  Space,
+  Typography,
 } from "antd";
 import moment from "moment";
 import { convertNumberToCurrency } from "../../utils/common";
 import { isEmpty } from "lodash";
+import ReactCountryFlag from "react-country-flag";
 
 function strip(number) {
   return parseFloat(parseFloat(number).toPrecision(7));
@@ -163,6 +166,7 @@ export default class Match extends React.Component {
           record.type === "input" ? (
             <InputNumber
               value={this.state.homeBet}
+              controls={false}
               onChange={(e) => {
                 this.setState({
                   homeBet: e,
@@ -181,7 +185,10 @@ export default class Match extends React.Component {
                   : 0
               }
               onPressEnter={() => this.confirmBet()}
-              disabled={this.state.betting || moment(this.state.match.startTime).isBefore(moment())}
+              disabled={
+                this.state.betting ||
+                moment(this.state.match.startTime).isBefore(moment())
+              }
             />
           ) : (
             convertNumberToCurrency(text)
@@ -196,7 +203,11 @@ export default class Match extends React.Component {
           record.type === "input" ? (
             <InputNumber
               value={this.state.drawBet}
-              disabled={this.state.betting || moment(this.state.match.startTime).isBefore(moment())}
+              disabled={
+                this.state.betting ||
+                moment(this.state.match.startTime).isBefore(moment())
+              }
+              controls={false}
               onChange={(e) => {
                 this.setState({
                   drawBet: e,
@@ -229,6 +240,7 @@ export default class Match extends React.Component {
           record.type === "input" ? (
             <InputNumber
               value={this.state.awayBet}
+              controls={false}
               onChange={(e) => {
                 this.setState({
                   awayBet: e,
@@ -247,7 +259,10 @@ export default class Match extends React.Component {
                   : 0
               }
               onPressEnter={() => this.confirmBet()}
-              disabled={this.state.betting || moment(this.state.match.startTime).isBefore(moment())}
+              disabled={
+                this.state.betting ||
+                moment(this.state.match.startTime).isBefore(moment())
+              }
             />
           ) : (
             convertNumberToCurrency(text)
@@ -295,7 +310,19 @@ export default class Match extends React.Component {
         <PageHeader
           ghost={false}
           onBack={() => window.history.back()}
-          tags={<Tag color={moment(this.state.match.startTime).isBefore(moment()) ? 'gray': 'blue'}>{moment(this.state.match.startTime).isBefore(moment()) ? 'Đã diễn ra': 'Sắp diễn ra'}</Tag>}
+          tags={
+            <Tag
+              color={
+                moment(this.state.match.startTime).isBefore(moment())
+                  ? "gray"
+                  : "blue"
+              }
+            >
+              {moment(this.state.match.startTime).isBefore(moment())
+                ? "Đã diễn ra"
+                : "Sắp diễn ra"}
+            </Tag>
+          }
           title={`${this.state.match.homeTeam.name} vs ${this.state.match.awayTeam.name}`}
           extra={[
             <Statistic.Countdown
@@ -312,7 +339,47 @@ export default class Match extends React.Component {
             />,
           ]}
         />
-        <Card>
+        <Card
+          title={
+            <div className="flex justify-center items-center">
+              <div className="flex justify-between items-center">
+                <Space>
+                  <ReactCountryFlag
+                    className="emojiFlag"
+                    countryCode={this.state.match.homeTeam.code}
+                    style={{
+                      fontSize: "24px",
+                      lineHeight: "24px",
+                    }}
+                    aria-label={this.state.match.homeTeam.name}
+                    svg
+                  />
+                  <Typography.Text strong>
+                    {this.state.match.homeTeam.name}
+                  </Typography.Text>
+                </Space>
+              </div>
+              <Typography.Text className="mx-5">VS</Typography.Text>
+              <div className="flex justify-between items-center">
+                <Space>
+                  <ReactCountryFlag
+                    className="emojiFlag"
+                    countryCode={this.state.match.awayTeam.code}
+                    style={{
+                      fontSize: "24px",
+                      lineHeight: "24px",
+                    }}
+                    aria-label={this.state.match.awayTeam.name}
+                    svg
+                  />
+                  <Typography.Text strong>
+                    {this.state.match.awayTeam.name}
+                  </Typography.Text>
+                </Space>
+              </div>
+            </div>
+          }
+        >
           <Descriptions column={1} title="Hướng dẫn chơi">
             <Descriptions.Item label="">
               bạn hãy điền số xu bạn muốn đặt (đơn vị tính nghìn, tức là nếu bạn
@@ -332,9 +399,7 @@ export default class Match extends React.Component {
           </Descriptions>
           <Table
             dataSource={dataSource}
-            scroll={{
-                x: 600
-            }}
+            scroll={false}
             columns={columns}
             loading={isEmpty(this.state.match)}
             pagination={false}
@@ -344,7 +409,12 @@ export default class Match extends React.Component {
                   type={"primary"}
                   loading={this.state.betting}
                   onClick={this.confirmBet}
-                  disabled={(!this.state.homeBet && !this.state.drawBet && !this.state.awayBet) || moment(this.state.match.startTime).isBefore(moment())}
+                  disabled={
+                    (!this.state.homeBet &&
+                      !this.state.drawBet &&
+                      !this.state.awayBet) ||
+                    moment(this.state.match.startTime).isBefore(moment())
+                  }
                 >
                   Xác nhận kèo
                 </Button>
