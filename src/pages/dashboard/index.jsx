@@ -1,14 +1,14 @@
 import React from "react";
 import StandardLayout from "../../layouts/StandardLayout";
 import {
-  List,
-  Card,
-  Row,
-  Col,
-  Typography,
-  Space,
-  Calendar,
-  Button,
+    List,
+    Card,
+    Row,
+    Col,
+    Typography,
+    Space,
+    Calendar,
+    Button, Descriptions,
 } from "antd";
 import moment from "moment";
 import MatchService from "../../services/bet/MatchService";
@@ -37,8 +37,10 @@ class Dashboard extends React.Component {
     }).then((response) => {
       if (response) {
         //TODO: sort matches
+
+
         const currentData = !isEmpty(response.body.data)
-          ? response.body.data.map((item) => ({
+          ? response.body.data.filter((item)=>item.type !== 'OUTRIGHTS').map((item) => ({
               ...item,
               date: moment(item.startTime).format("DDMMYYYY"),
               started: moment(item.startTime).isBefore(moment()),
@@ -99,9 +101,23 @@ class Dashboard extends React.Component {
   render() {
     const { matches, query, currentDate } = this.state;
     return (
-      <StandardLayout {...this.props} title={"Welcome to Olympus"}>
+      <StandardLayout {...this.props} title={"Welcome to Fifa World Cup"}>
         <Row gutter={16}>
           <Col xs={24} sm={24} md={12} lg={16}>
+
+              <Descriptions column={1} title="Luật chơi">
+                  <Descriptions.Item label="Donate">
+                      10% giá trị của việc thắng/thua trong trò chơi sẽ được donate vào quỹ phục vụ tổ chức sự kiện liên
+                      hoan cuối giải (tức là trong trường hợp bạn thắng bạn sẽ donate 10% giá trị bạn thắng được, trong
+                      trường hợp bạn thua “BTC” sẽ donate 20% giá trị bạn đã thua)
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Tỉ lệ kèo">
+                      Bạn có thể đặt nhiều lần, với các tỉ lệ khác nhau miễn sao tổng số
+                      xu bạn tham gia một kèo nhỏ hơn giới hạn. Nhà cái sẽ cập nhật kèo vào khoảng 12:00-13:00 và 17:00 đến 18:00
+                      hàng ngày tùy điều kiện thực tế.
+                  </Descriptions.Item>
+              </Descriptions>
+
             <List
               loading={isEmpty(matches)}
               dataSource={matches}
