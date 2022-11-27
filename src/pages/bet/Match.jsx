@@ -88,61 +88,72 @@ export default class Match extends React.Component {
     });
   }
 
-  confirmBet = () => {
-    this.setState({
-      betting: true,
-    });
-    if (
-      this.state.homeBet > 200 ||
-      this.state.drawBet > 200 ||
-      this.state.awayBet > 200
-    ) {
-      message.error(
-        `Số xu bet tối đa của vòng hiện tại là 200k, vui lòng nhập con số thấp hơn 200k`
-      );
-      return;
-    }
+    confirmBet = () => {
+        this.setState({
+            betting: true,
+        });
 
-    let handleResponse = (response) => {
-      if (response.status === 201) {
-        message.success("Đã bet thành công");
-        this.setState(
-          {
-            homeBet: 0,
-            drawBet: 0,
-            awayBet: 0,
-          },
-          () => {
-            this.loadBets();
-          }
-        );
-      } else
-        message.error(
-          "Không bet được, vui lòng kiểm tra lại thông tin bạn nhập"
-        );
-    };
+        let homeOdds = this.state.odds.find((odd) => {
+            return odd.code === "1";
+        });
+        let awayOdds = this.state.odds.find((odd) => {
+            return odd.code === "2";
+        });
+        let drawOdds = this.state.odds.find((odd) => {
+            return odd.code === "x";
+        });
 
-    if (this.state.homeBet > 0)
-      MatchService.bet(
-        this.state.match.id,
-        "1x2",
-        "1",
-        this.state.homeBet * 1000
-      ).then(handleResponse);
-    if (this.state.drawBet > 0)
-      MatchService.bet(
-        this.state.match.id,
-        "1x2",
-        "x",
-        this.state.drawBet * 1000
-      ).then(handleResponse);
-    if (this.state.awayBet > 0)
-      MatchService.bet(
-        this.state.match.id,
-        "1x2",
-        "2",
-        this.state.awayBet * 1000
-      ).then(handleResponse);
+        if (
+            this.state.homeBet > MAX_BET ||
+            this.state.drawBet > MAX_BET ||
+            this.state.awayBet > MAX_BET
+        ) {
+            message.error(
+                `Số xu bet tối đa của vòng hiện tại là ${MAX_BET}k, vui lòng nhập con số thấp hơn ${MAX_BET}k`
+            );
+            return;
+        }
+
+        let handleResponse = (response) => {
+            if (response.status === 201) {
+                message.success("Đã bet thành công");
+                this.setState({
+                    homeBet: 0,
+                    drawBet: 0,
+                    awayBet: 0
+                }, () => {
+                    this.loadBets()
+                })
+            } else
+                message.error(
+                    "Không bet được: " + response.body.message
+                );
+        };
+
+        if (this.state.homeBet > 0)
+            MatchService.bet(
+                this.state.match.id,
+                "1x2",
+                "1",
+                this.state.homeBet * 1000,
+                homeOdds.ratio
+            ).then(handleResponse);
+        if (this.state.drawBet > 0)
+            MatchService.bet(
+                this.state.match.id,
+                "1x2",
+                "x",
+                this.state.drawBet * 1000,
+                drawOdds.ratio
+            ).then(handleResponse);
+        if (this.state.awayBet > 0)
+            MatchService.bet(
+                this.state.match.id,
+                "1x2",
+                "2",
+                this.state.awayBet * 1000,
+                awayOdds.ratio
+            ).then(handleResponse);
 
     setTimeout(() => {
       this.setState({
