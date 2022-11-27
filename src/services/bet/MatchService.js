@@ -29,7 +29,7 @@ export default class MatchService {
         },bet_session,handleResponse)
     }
 
-    static bet(matchId, type, betOn, money) {
+    static bet(matchId, type, betOn, money, ratio) {
         let bet_session = LocalStore.getInstance().read('bet_session');
 
         return BetClient.requestPromise({
@@ -39,7 +39,8 @@ export default class MatchService {
                 matchId: matchId,
                 type: type,
                 code: betOn,
-                money: money
+                money: money,
+                ratio: ratio
             }
         },bet_session,handleResponse)
     }

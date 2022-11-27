@@ -87,13 +87,24 @@ export default class Match extends React.Component {
         this.setState({
             betting: true,
         });
+
+        let homeOdds = this.state.odds.find((odd) => {
+            return odd.code === "1";
+        });
+        let awayOdds = this.state.odds.find((odd) => {
+            return odd.code === "2";
+        });
+        let drawOdds = this.state.odds.find((odd) => {
+            return odd.code === "x";
+        });
+
         if (
-            this.state.homeBet > 200 ||
-            this.state.drawBet > 200 ||
-            this.state.awayBet > 200
+            this.state.homeBet > MAX_BET ||
+            this.state.drawBet > MAX_BET ||
+            this.state.awayBet > MAX_BET
         ) {
             message.error(
-                `Số xu bet tối đa của vòng hiện tại là 200k, vui lòng nhập con số thấp hơn 200k`
+                `Số xu bet tối đa của vòng hiện tại là ${MAX_BET}k, vui lòng nhập con số thấp hơn ${MAX_BET}k`
             );
             return;
         }
@@ -110,7 +121,7 @@ export default class Match extends React.Component {
                 })
             } else
                 message.error(
-                    "Không bet được, vui lòng kiểm tra lại thông tin bạn nhập"
+                    "Không bet được: " + response.body.message
                 );
         };
 
@@ -119,21 +130,24 @@ export default class Match extends React.Component {
                 this.state.match.id,
                 "1x2",
                 "1",
-                this.state.homeBet * 1000
+                this.state.homeBet * 1000,
+                homeOdds.ratio
             ).then(handleResponse);
         if (this.state.drawBet > 0)
             MatchService.bet(
                 this.state.match.id,
                 "1x2",
                 "x",
-                this.state.drawBet * 1000
+                this.state.drawBet * 1000,
+                drawOdds.ratio
             ).then(handleResponse);
         if (this.state.awayBet > 0)
             MatchService.bet(
                 this.state.match.id,
                 "1x2",
                 "2",
-                this.state.awayBet * 1000
+                this.state.awayBet * 1000,
+                awayOdds.ratio
             ).then(handleResponse);
 
         setTimeout(() => {

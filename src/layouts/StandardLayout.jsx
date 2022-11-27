@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
 import SiteFooter from "../pages/components/SiteFooter";
 import { Link } from "react-router-dom";
-import { ProfileOutlined } from "@ant-design/icons";
+import { ProfileOutlined, TrophyOutlined, CalendarOutlined } from "@ant-design/icons";
 import "./styles.css";
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -58,6 +58,16 @@ class StandardLayout extends Component {
               mode="inline"
               defaultOpenKeys={["report"]}
             >
+              <Menu.Item icon={<CalendarOutlined />}>
+                <Link to={"/"}>
+                  Lịch thi đấu & dự đoán
+                </Link>
+              </Menu.Item>
+              <Menu.Item icon={<TrophyOutlined />}>
+                <Link to={"/bet/outrights"}>
+                  Dự đoán vô địch
+                </Link>
+              </Menu.Item>
               <SubMenu
                 icon={<ProfileOutlined />}
                 title={"Thống kê"}
