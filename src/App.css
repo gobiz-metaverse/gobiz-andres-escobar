@@ -9,6 +9,10 @@
 @import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-kanban/styles/material.css";
 
+body{
+  overflow-x: hidden;
+}
+
 .box {
   border: 1px solid #ebedf0;
   border-radius: 2px;
@@ -137,4 +141,20 @@
 .ant-input-number{
   width: 100%;
   border-radius: 5px;
+}
+.content--layout{
+  padding: 16px;
+  position: relative;
+  min-height: 360px;
+}
+@media screen and (max-width: 600px) {
+  div, p, span, a{
+    font-size: 13px !important;
+  }
+  .ant-table-cell, .ant-card-body{
+    padding: 2px !important;
+  }
+  .content--layout{
+    padding: 5px !important;
+  }
 }
