@@ -1,6 +1,17 @@
 import React from "react";
 import { Avatar, Button, Space, Typography, Layout } from "antd";
 import { PicLeftOutlined, UserOutlined } from "@ant-design/icons";
+import {LocalStore} from "../utils/LocalStore";
+
+const getUsername = () => {
+  let user = LocalStore.getInstance().read('user');
+
+  if (user)
+    return user.preferred_username;
+
+  return 'Chưa đăng nhập';
+};
+
 export default function HeaderComponent({ openDraw, width }) {
   return (
     <Layout.Header style={{ background: "#fff", padding: 0 }}>
@@ -16,7 +27,7 @@ export default function HeaderComponent({ openDraw, width }) {
         </div>
         <Space>
           <Avatar icon={<UserOutlined />} />
-          <Typography.Text>Username</Typography.Text>
+          <Typography.Text>{getUsername()}</Typography.Text>
         </Space>
       </div>
     </Layout.Header>
