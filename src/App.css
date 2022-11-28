@@ -147,6 +147,9 @@ body{
   position: relative;
   min-height: 360px;
 }
+.ant-drawer-close{
+  color: #fff !important;
+}
 @media screen and (max-width: 600px) {
   div, p, span, a{
     font-size: 13px !important;

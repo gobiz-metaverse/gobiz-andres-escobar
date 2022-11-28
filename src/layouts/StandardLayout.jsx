@@ -4,6 +4,7 @@ import SiteFooter from "../pages/components/SiteFooter";
 import "./styles.css";
 import HeaderComponent from "./Header";
 import MenuComponent from "./Menu";
+import { CloseOutlined } from "@ant-design/icons";
 const { Header, Content, Footer, Sider } = Layout;
 
 class StandardLayout extends Component {
@@ -43,7 +44,7 @@ class StandardLayout extends Component {
     return (
       <Layout style={{ minHeight: "100vh" }}>
         {!this.state.collapsed && (
-          <Sider breakpoint="lg" collapsedWidth="40" collapsed={false}>
+          <Sider breakpoint="lg" width={240} collapsed={false}>
             <MenuComponent activeMenu={this.props.activeMenu} />
           </Sider>
         )}
@@ -67,8 +68,13 @@ class StandardLayout extends Component {
         </Layout>
         {this.state.isDraw && (
           <Drawer
-            placement="dark"
+            placement="left"
             height="100vh"
+            width={240}
+            headerStyle={{
+              background: '#000',
+              borderBottom: '0'
+            }}
             onClose={() =>
               this.setState({
                 isDraw: false,
@@ -76,6 +82,7 @@ class StandardLayout extends Component {
             }
             bodyStyle={{
               padding: 0,
+              background: '#000'
             }}
             open={this.state.isDraw}
           >

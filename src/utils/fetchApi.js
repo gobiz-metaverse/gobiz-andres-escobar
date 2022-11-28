@@ -3,6 +3,7 @@
  */
 
 //import "fetch";
+import { isEmpty } from 'lodash';
 import 'whatwg-fetch';
 import {BASE_URL} from "../App";
 
@@ -51,7 +52,7 @@ export default async(endpoint, payload) => {
         //throw err;
         console.error(err);
         return {
-            status: res.status,
+            status: !isEmpty(res) ? res.status : '',
             body: null
         }
     }
