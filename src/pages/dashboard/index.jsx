@@ -40,7 +40,7 @@ class Dashboard extends React.Component {
                 //TODO: sort matches
 
 
-                const currentData = !isEmpty(response.body.data)
+                const currentData = !isEmpty(response) && !isEmpty(response.body) && !isEmpty(response.body.data)
                     ? response.body.data.filter((item) => item.type !== 'OUTRIGHTS').map((item) => ({
                         ...item,
                         date: moment(item.startTime).format("DDMMYYYY"),
