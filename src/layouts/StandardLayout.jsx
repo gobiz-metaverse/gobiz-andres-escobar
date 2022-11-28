@@ -1,16 +1,20 @@
 import React, { Component } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Drawer } from "antd";
 import SiteFooter from "../pages/components/SiteFooter";
-import { Link } from "react-router-dom";
-import { ProfileOutlined, TrophyOutlined, CalendarOutlined } from "@ant-design/icons";
 import "./styles.css";
+import HeaderComponent from "./Header";
+import MenuComponent from "./Menu";
 const { Header, Content, Footer, Sider } = Layout;
-const SubMenu = Menu.SubMenu;
 
 class StandardLayout extends Component {
-  state = {
-    collapsed: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapsed: false,
+      isDraw: false,
+      width: window.innerWidth,
+    };
+  }
 
   onCollapse = (collapsed) => {
     this.setState({ collapsed });
@@ -20,6 +24,13 @@ class StandardLayout extends Component {
     if (this.props.title) {
       document.title = this.props.title;
     }
+    window.addEventListener(
+      "resize",
+      this.setState({
+        width: window.innerWidth,
+        collapsed: window.innerWidth <= 992,
+      })
+    );
   }
 
   componentDidUpdate(prevProps) {
@@ -27,172 +38,50 @@ class StandardLayout extends Component {
       this.forceUpdate();
     }
   }
-
   render() {
+    console.log("width", this.state.width);
     return (
       <Layout style={{ minHeight: "100vh" }}>
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="40"
-          // collapsible
-          collapsed={this.state.collapsed}
-          onCollapse={this.onCollapse}
-          // trigger={null}
-        >
-          <div className="logo flex justify-center pt-3">
-            <Link to={"/"}>
-              <img
-                className="logo--response"
-                src={
-                  "https://gobiz.vn/wp-content/themes/gobiz/fav/favicon-32x32.png"
-                }
-                alt={"Olympus"}
-              />
-            </Link>
-          </div>
-          <div>
-            <Menu
-              theme="dark"
-              selectedKeys={this.props.activeMenu}
-              defaultSelectedKeys={["1"]}
-              mode="inline"
-              defaultOpenKeys={["report"]}
-            >
-              <Menu.Item icon={<CalendarOutlined />}>
-                <Link to={"/"}>
-                  Lịch thi đấu & dự đoán
-                </Link>
-              </Menu.Item>
-              <Menu.Item icon={<TrophyOutlined />}>
-                <Link to={"/bet/outrights"}>
-                  Dự đoán vô địch
-                </Link>
-              </Menu.Item>
-              <SubMenu
-                icon={<ProfileOutlined />}
-                title={"Thống kê"}
-                key={"report"}
-              >
-                <Menu.Item>
-                  <Link to={"/report/bet-history"}>
-                    Lịch sử chơi toàn hệ thống
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link to={"/report/top-playing"}>
-                    Top người chơi tích cực
-                  </Link>
-                </Menu.Item>
-              </SubMenu>
-              {/*<SubMenu*/}
-              {/*    icon={<SketchOutlined/>}*/}
-              {/*    key="sub_taiga"*/}
-              {/*    title={<span><span>Taiga</span></span>}*/}
-              {/*>*/}
-              {/*    <Menu.Item key="taiga">*/}
-              {/*        <Link to={'/taiga/'}><span>Dashboard</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="team_sprint">*/}
-              {/*        <Link to={'/taiga/teams/'}><span>Quản lý theo team</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="personal_report">*/}
-              {/*        <Link to={'/taiga/report/me'}><span>Báo cáo cá nhân</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="report">*/}
-              {/*        <Link to={'/taiga/report/all'}><span>Báo cáo tổng hợp</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*</SubMenu>*/}
-              {/*<SubMenu*/}
-              {/*    icon={<CheckSquareOutlined />}*/}
-              {/*    key="jira"*/}
-              {/*    title={<span><span>Jira</span></span>}*/}
-              {/*>*/}
-              {/*    <Menu.Item key="jira_dashboard">*/}
-              {/*        <Link to={'/jira/'}><span>Dashboard</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="jira_team">*/}
-              {/*        <Link to={'/jira/teams/'}><span>Quản lý theo team</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    /!*<Menu.Item key="jira_report">*!/*/}
-              {/*    /!*    <Link to={'/taiga/report/me'}><span>Báo cáo cá nhân</span></Link>*!/*/}
-              {/*    /!*</Menu.Item>*!/*/}
-              {/*    /!*<Menu.Item key="report">*!/*/}
-              {/*    /!*    <Link to={'/taiga/report/all'}><span>Báo cáo tổng hợp</span></Link>*!/*/}
-              {/*    /!*</Menu.Item>*!/*/}
-              {/*</SubMenu>*/}
-              {/*<SubMenu icon={<ToolOutlined/>}*/}
-              {/*         key="sub_tool"*/}
-              {/*         title={<span><span>Công cụ</span></span>}*/}
-              {/*>*/}
-              {/*    <Menu.Item key="json_schema">*/}
-              {/*        <Link to={'/tools/schema'}><span>Json Schema Generator</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="hue">*/}
-              {/*        <Link to={'/hue'}><span>Công cụ xử lý đơn</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="authenme">*/}
-              {/*        <Link to={'/authenme'}><span>Công cụ xử lý user</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*</SubMenu>*/}
-              {/*<SubMenu icon={<ProfileOutlined />}*/}
-              {/*         key="requirements"*/}
-              {/*         title={<span><span>Tài liệu dự án</span></span>}*/}
-              {/*>*/}
-              {/*    <Menu.Item key="m1">*/}
-              {/*        <Link to={'/requirements/m1'}><span>M1: Customer Order Management</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m2">*/}
-              {/*        <Link to={'/requirements/m2'}><span>M2: Admin Order Management</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m3">*/}
-              {/*        <Link to={'/requirements/m3'}><span>M3: Complaints Management</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m5">*/}
-              {/*        <Link to={'/requirements/m5'}><span>M5: Purchasing</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m6">*/}
-              {/*        <Link to={'/requirements/m6'}><span>M6: Warehouse Management</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m19">*/}
-              {/*        <Link to={'/requirements/m19'}><span>M19: Sale & Affiliates Management</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m22">*/}
-              {/*        <Link to={'/requirements/m22'}><span>M22: Ubox - Sàn</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m24">*/}
-              {/*        <Link to={'/requirements/m24'}><span>M24: Ubox - Gobiz Assistant</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m28">*/}
-              {/*        <Link to={'/requirements/m28'}><span>M28: Fulfilment Management</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m29">*/}
-              {/*        <Link to={'/requirements/m29'}><span>M29: Email Sending Service</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*    <Menu.Item key="m32">*/}
-              {/*        <Link to={'/requirements/m32'}><span>M32: Delivery API Service</span></Link>*/}
-              {/*    </Menu.Item>*/}
-              {/*</SubMenu>*/}
-            </Menu>
-          </div>
-        </Sider>
+        {!this.state.collapsed && (
+          <Sider breakpoint="lg" collapsedWidth="40" collapsed={false}>
+            <MenuComponent activeMenu={this.props.activeMenu} />
+          </Sider>
+        )}
         <Layout>
           <Header style={{ background: "#fff", padding: 0 }}>
-            {this.props.header}
+            <HeaderComponent
+              width={this.state.width}
+              openDraw={() => {
+                this.setState({ isDraw: !this.state.isDraw });
+              }}
+            />
           </Header>
-          <Content style={{ margin: "0 16px", position: "relative" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              {/*<Breadcrumb.Item>User</Breadcrumb.Item>*/}
-              {/*<Breadcrumb.Item>Bill</Breadcrumb.Item>*/}
-            </Breadcrumb>
-            <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
+          <Content>
+            <div className="content--layout">
               {this.props.children}
             </div>
-            {/*<ChangeLog/>*/}
           </Content>
           <Footer style={{ textAlign: "center" }}>
             <SiteFooter />
           </Footer>
         </Layout>
+        {this.state.isDraw && (
+          <Drawer
+            placement="dark"
+            height="100vh"
+            onClose={() =>
+              this.setState({
+                isDraw: false,
+              })
+            }
+            bodyStyle={{
+              padding: 0,
+            }}
+            open={this.state.isDraw}
+          >
+            <MenuComponent activeMenu={this.state.activeMenu} />
+          </Drawer>
+        )}
       </Layout>
     );
   }

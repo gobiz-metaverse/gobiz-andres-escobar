@@ -8,7 +8,7 @@ import {
     Typography,
     Space,
     Calendar,
-    Button, Descriptions,
+    Descriptions,
 } from "antd";
 import moment from "moment";
 import MatchService from "../../services/bet/MatchService";
@@ -101,12 +101,12 @@ class Dashboard extends React.Component {
         }
     }
 
-    render() {
-        const {matches, query, currentDate} = this.state;
-        return (
-            <StandardLayout {...this.props} title={"Welcome to Fifa World Cup"}>
-                <Row gutter={16}>
-                    <Col xs={24} sm={24} md={12} lg={16}>
+  render() {
+    const { matches, currentDate } = this.state;
+    return (
+      <StandardLayout {...this.props} title={"Welcome to Fifa World Cup"}>
+        <Row gutter={16}>
+          <Col xs={24} sm={24} md={12} lg={16}>
 
                         <Descriptions column={1} title="Luật chơi">
                             <Descriptions.Item label="Donate">

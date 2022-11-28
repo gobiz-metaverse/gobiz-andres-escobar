@@ -59,7 +59,10 @@ export default class BetRoute extends React.Component {
         }
 
         return (
-            <Route exact={true} {...rest} key={Key} render={props => {
+            <Route 
+            exact={true} 
+            {...rest} key={Key} 
+            render={props => {
                 return (
                     <Component {...props} />
                 )
