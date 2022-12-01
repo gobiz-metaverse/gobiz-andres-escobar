@@ -101,20 +101,43 @@ class Dashboard extends React.Component {
         }
     }
 
-  render() {
-    const { matches, currentDate } = this.state;
-    return (
-      <StandardLayout {...this.props} title={"Welcome to Fifa World Cup"}>
-        <Row gutter={16}>
-          <Col xs={24} sm={24} md={12} lg={16}>
-
-                        <Descriptions column={1} title="Luật chơi">
-                            <Descriptions.Item label="Donate">
-                                10% giá trị của việc thắng/thua trong trò chơi sẽ được donate vào quỹ phục vụ tổ chức sự
-                                kiện liên
-                                hoan cuối giải (tức là trong trường hợp bạn thắng bạn sẽ donate 10% giá trị bạn thắng
-                                được, trong
-                                trường hợp bạn thua “BTC” sẽ donate 20% giá trị bạn đã thua)
+    render() {
+        const {matches, currentDate} = this.state;
+        return (
+            <StandardLayout {...this.props} title={"Welcome to Fifa World Cup"}>
+                <Row gutter={16}>
+                    <Col xs={24} sm={24} md={12} lg={16}>
+                        <h4>Vui cùng WORLD CUP 2022</h4>
+                        <h4>TRĂM TRÁI BANH - TRIỆU CẢM XÚC ^^</h4>
+                        <Descriptions column={1} title="Giới thiệu">
+                            <Descriptions.Item label="Đây là gì?">
+                                Ten ! Ten ! Ten ! Tèn
+                                Chúng ta đã trải qua 1 tuần ăn ngủ cùng WC, cảm xúc lên xuống thay màu xanh - đỏ liên
+                                tục
+                                Hòa chung không khí với Thế giới, 4 năm mới chứng kiến 1 lần ^^
+                                Worl Cup đưa chúng ta xích lại gần nhau hơn bên những trận cầu Đỉnh cao [Wow]
+                                Hiện ACE bet thủ đã bắt đầu vào kèo có kinh nghiệm, chấp cũng sâu sâu hơn, BTC xin nhắc
+                                lại một số
+                                thông tin cho các bet thủ mới và làm rõ hơn game VUI CÙNG WORL CUP được hỗ trợ và dẫn
+                                đường bởi
+                                Idol NI SUN KI
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Chơi như thế nào?">
+                                Truy cập wc.100trieu.net -> Đăng nhập bằng email công ty
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Chơi được gì?">
+                                <h4>VỚI MỖI KÈO BẠN THAM GIA</h4>
+                                - Nếu bạn thắng: bạn nhận 90% số tiền thắng được, BTC giữ 10% cho quỹ liên hoan cuối
+                                chương trình<br/>
+                                - Nếu bạn thua: bạn tặng BTC số tiền bạn cược, BTC tự động donate 20% số đó cho quỹ liên
+                                hoan
+                            </Descriptions.Item>
+                            <Descriptions.Item label="BUỔI XEM CHUNG">
+                                BTC sẽ ghim các trận cầu đỉnh cao khuyến khích các bạn tổ chức xem chung, sẵn sàng tài
+                                trợ cafe 50k/bạn/nhóm 10 người<br/>
+                                Riêng trận CHUNG KẾT tổ chức buổi xem chung cùng buổi Trao thưởng - Tri ân VĐV UpRace
+                                2022 vào ngày 18.12.2022, sẽ được thông báo chi tiết sớm nhất.<br/>
+                                Hãy join và tận hưởng cảm xúc BET trận hôm nay luôn thôi !
                             </Descriptions.Item>
                             <Descriptions.Item label="Tỉ lệ kèo">
                                 Bạn có thể đặt nhiều lần, với các tỉ lệ khác nhau miễn sao tổng số
@@ -123,7 +146,6 @@ class Dashboard extends React.Component {
                                 hàng ngày tùy điều kiện thực tế.
                             </Descriptions.Item>
                         </Descriptions>
-
                         <List
                             loading={isEmpty(matches)}
                             dataSource={matches}
