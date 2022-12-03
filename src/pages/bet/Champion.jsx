@@ -78,7 +78,7 @@ export default class Champion extends React.Component {
             "OUTRIGHTS",
             this.state.betOn,
             this.state.bet * 1000,
-            this.state.odds.find(o=>o.code === this.state.betOn)
+            this.state.odds.find(o => o.code === this.state.betOn)
         ).then(handleResponse);
     };
 
@@ -149,7 +149,10 @@ export default class Champion extends React.Component {
                                 ).toFixed(2)
                                 : 0
                         }
-                        disabled={this.state.outrightMatch && moment(this.state.outrightMatch.startTime).isBefore(moment())}
+                        disabled={
+                            this.state.outrightMatch && moment(this.state.outrightMatch.startTime).isBefore(moment())
+                            || record.ratio <= 0
+                        }
                         onPressEnter={() => this.confirmBet()}
                     />
                 }
@@ -231,12 +234,13 @@ export default class Champion extends React.Component {
                         cho quỹ liên hoan xem World Cup, vui lòng giữ tinh thần vui vẻ là
                         chính.
                     </Descriptions.Item>
-                    { this.state.outrightMatch && moment(this.state.outrightMatch.startTime).isBefore(moment()) ? <Descriptions.Item label="">
-                        <Alert message="Kèo đang bị khóa để nhà cái cập nhật tỉ lệ kèo" type="error" />
-                    </Descriptions.Item> : null}
+                    {this.state.outrightMatch && moment(this.state.outrightMatch.startTime).isBefore(moment()) ?
+                        <Descriptions.Item label="">
+                            <Alert message="Kèo đang bị khóa để nhà cái cập nhật tỉ lệ kèo" type="error"/>
+                        </Descriptions.Item> : null}
                 </Descriptions>
                 <Table
-                    dataSource={this.state.odds.filter(o=>o.ratio>1)}
+                    dataSource={this.state.odds.filter(o => o.ratio > 1)}
                     columns={Outrights}
                     pagination={false}
                 />

@@ -238,7 +238,7 @@ export default class Match extends React.Component {
               onPressEnter={() => this.confirmBet()}
               disabled={
                 this.state.betting ||
-                moment(this.state.match.startTime).isBefore(moment())
+                moment(this.state.match.startTime).isBefore(moment()) || this.state.odds.length === 0
               }
             />
           ) : (
@@ -251,6 +251,7 @@ export default class Match extends React.Component {
         dataIndex: "fair",
         key: "fair",
         align: "right",
+        hidden: this.state.match.type,
         render: (text, record) =>
           record.type === "input" ? (
             <InputNumber
@@ -337,7 +338,7 @@ export default class Match extends React.Component {
             convertNumberToCurrency(text)
           ),
       },
-    ];
+    ].filter(item => !item.hidden);
     const dataSource = [
       {
         title: "Tỉ lệ",
