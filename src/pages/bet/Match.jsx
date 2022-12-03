@@ -564,6 +564,9 @@ export default class Match extends React.Component {
               cho quỹ liên hoan xem World Cup, vui lòng giữ tinh thần vui vẻ là
               chính.
             </Descriptions.Item>
+              <Descriptions.Item label="Giới hạn">
+                  <strong>{MAX_BET}K</strong>
+              </Descriptions.Item>
           </Descriptions>
 
           <Table
