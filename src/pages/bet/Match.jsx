@@ -27,7 +27,7 @@ function strip(number) {
   return parseFloat(parseFloat(number).toPrecision(7));
 }
 
-const MAX_BET = 200;
+const MAX_BET = 250;
 
 export default class Match extends React.Component {
   constructor(props) {
