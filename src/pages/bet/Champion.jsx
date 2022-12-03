@@ -113,7 +113,13 @@ export default class Champion extends React.Component {
                 title: 'Tỉ lệ',
                 key: 'ratio',
                 dataIndex: 'ratio',
-                align: 'right'
+                align: 'right',
+                render: (text, record) => {
+                    if (record.ratio > 1) {
+                        return text
+                    }
+                    return "Đã bị loại"
+                }
             },
             {
                 title: 'Đã vào',
@@ -240,7 +246,7 @@ export default class Champion extends React.Component {
                         </Descriptions.Item> : null}
                 </Descriptions>
                 <Table
-                    dataSource={this.state.odds.filter(o => o.ratio > 1)}
+                    dataSource={this.state.odds.sort((a,b)=> b.ratio - a.ratio)}
                     columns={Outrights}
                     pagination={false}
                 />
