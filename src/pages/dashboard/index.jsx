@@ -32,6 +32,16 @@ class Dashboard extends React.Component {
         };
     }
 
+    getMatchType = (match) => {
+        switch (match.type) {
+            case 'FINAL': return 'Chung kết';
+            case 'SEMI': return 'Bán kết';
+            case 'QUARTER': return 'Tứ kết';
+            case '1_16': return '1/16';
+            default: return `Bảng ${match.awayTeam.groupCode}`
+        }
+    };
+
     callMatch() {
         MatchService.getMatches({
             ...this.state.query,
@@ -53,7 +63,7 @@ class Dashboard extends React.Component {
                 const finalMatch = !isEmpty(newLatest)
                     ? reverse(newLatest).map((iMatch) => ({
                         title: !isEmpty(first(iMatch))
-                            ? `Group State - ${moment(first(iMatch).startTime).calendar(
+                            ? `${moment(first(iMatch).startTime).calendar(
                                 null,
                                 {
                                     lastDay: "[Yesterday]",
@@ -185,7 +195,7 @@ class Dashboard extends React.Component {
                                                             }}
                                                         >
                                                             <Typography.Text>
-                                                                Group {iChild.awayTeam.groupCode}
+                                                                {this.getMatchType(iChild)}
                                                             </Typography.Text>
                                                             <Row gutter={15}>
                                                                 <Col span={16}>
