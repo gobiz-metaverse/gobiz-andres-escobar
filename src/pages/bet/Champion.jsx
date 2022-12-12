@@ -137,7 +137,7 @@ export default class Champion extends React.Component {
                 dataIndex: 'money',
                 render: (text, record) => {
                     return <InputNumber
-                        max={250}
+                        max={500}
                         value={record.code === this.state.betOn ? this.state.bet : 0}
                         onChange={(e) => {
                             this.setState({
