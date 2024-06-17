@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
 env:
   PAGE_PROJECT_NAME: euro-100trieu
+  CI: false
 jobs:
   setup-build-publish:
     name: Setup, Build, Publish
@@ -41,4 +42,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_TOKEN }}
           accountId: ${{ secrets.CF_AI }}
-          command: pages deploy build --project-name=euro-100trieu --commit-dirty=true --branch=main
+          command: pages deploy build --project-name=$PAGE_PROJECT_NAME --commit-dirty=true --branch=main
