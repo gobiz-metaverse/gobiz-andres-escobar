@@ -27,7 +27,7 @@ function strip(number) {
   return parseFloat(parseFloat(number).toPrecision(7));
 }
 
-const MAX_BET = 500;
+const MAX_BET = 200;
 
 export default class Match extends React.Component {
   constructor(props) {
@@ -313,7 +313,7 @@ export default class Match extends React.Component {
               value={this.state.awayBet}
               onChange={(e) => {
                 this.setState({
-                  awayBet: e,
+                  awayBet: 0,
                   drawBet: 0,
                   homeBet: 0,
                 });
