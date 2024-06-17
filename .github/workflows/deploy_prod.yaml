@@ -41,4 +41,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_TOKEN }}
           accountId: ${{ secrets.CF_AI }}
-          command: pages deploy build --project-name=$PAGE_PROJECT_NAME
+          command: pages deploy build --project-name=$PAGE_PROJECT_NAME  --commit-dirty=true
