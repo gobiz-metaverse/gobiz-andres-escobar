@@ -258,8 +258,8 @@ export default class Match extends React.Component {
               max={MAX_BET}
               value={this.state.drawBet}
               disabled={
-                this.state.betting ||
-                moment(this.state.match.startTime).isBefore(moment())
+                  this.state.betting ||
+                  moment(this.state.match.startTime).isBefore(moment()) || this.state.odds.length === 0
               }
               onChange={(e) => {
                 this.setState({
@@ -313,7 +313,7 @@ export default class Match extends React.Component {
               value={this.state.awayBet}
               onChange={(e) => {
                 this.setState({
-                  awayBet: 0,
+                  awayBet: e,
                   drawBet: 0,
                   homeBet: 0,
                 });
@@ -331,7 +331,7 @@ export default class Match extends React.Component {
               onPressEnter={() => this.confirmBet()}
               disabled={
                 this.state.betting ||
-                moment(this.state.match.startTime).isBefore(moment())
+                  moment(this.state.match.startTime).isBefore(moment()) || this.state.odds.length === 0
               }
             />
           ) : (
